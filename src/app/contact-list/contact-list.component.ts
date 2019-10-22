@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-contact-list',
@@ -9,14 +10,19 @@ import { Router } from '@angular/router';
 export class ContactListComponent implements OnInit {
 
   constructor(
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) { }
 
   ngOnInit() {
-    // const token = window.localStorage.getItem('auth_token');
-    // if (!token) {
-    //   this.router.navigate(['/signin']);
-    // }
+    this.http.get('http://106.15.206.216:3000/contacts')
+    .toPromise()
+    .then(data => {
+      console.log(data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
 }
